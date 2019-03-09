@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 finally
                 {
-                    Intent welcomeIntent = new Intent(getApplicationContext(), PhoneVerificationActivity.class);
+                    Intent welcomeIntent = new Intent(getApplicationContext(), PhoneActivity.class);
                     startActivity(welcomeIntent);
                 }
             }

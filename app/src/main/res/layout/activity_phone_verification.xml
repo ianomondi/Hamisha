@@ -14,7 +14,7 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"/>
 
     <TextView
@@ -23,13 +23,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/progressBarVerification"
         android:layout_marginTop="55dp"
-        android:text="Enter the code sent to your phone "
+        android:text="Verify Your Phone Number"
+        android:textStyle="bold"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp" />
-
-
-
 
     <com.bigbangbutton.editcodeview.EditCodeView
         android:id="@+id/codeView"
