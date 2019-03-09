@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:id="@+id/parent"
+    tools:context=".PhoneVerificationActivity">
+
+
+    <ProgressBar
+        android:id="@+id/progressBarVerification"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/tvPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressBarVerification"
+        android:layout_marginTop="55dp"
+        android:text="Verify Your Phone Number"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp" />
+
+    <com.bigbangbutton.editcodeview.EditCodeView
+        android:id="@+id/codeView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPrompt"
+        app:codeLength="6"
+        android:layout_marginTop="40dp"
+        app:underlineCursorColor="@color/iconcolor"
+        android:layout_centerHorizontal = "true" />
+
+
+
+
+    <com.rey.material.widget.Button
+        android:id="@+id/resend_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/codeView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/textviews"
+        android:text="Resend code"
+        android:textAllCaps="false" />
+
+
+</RelativeLayout>

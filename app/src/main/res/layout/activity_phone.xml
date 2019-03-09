@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PhoneActivity">
+
+    <LinearLayout
+        android:id="@+id/phone_linear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/tvPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progressBarVerification"
+            android:layout_marginTop="55dp"
+            android:text="Verify Your Phone Number"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/verify_phone_instruction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPrompt"
+            android:text="Hamisha will send an SMS message to verify your phone number. Enter your country code and phone number"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            android:layout_marginTop="15dp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/flag_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/kenya"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                />
+            <TextView
+                android:id="@+id/country_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/flag_icon"
+                android:layout_marginTop="23dp"
+                android:layout_marginLeft="15dp"
+                android:text="+ 254"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:padding="3dp"
+                />
+
+            <EditText
+                android:id="@+id/phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/country_code"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                />
+
+            <com.rey.material.widget.Button
+                android:id="@+id/details_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phone_number"
+                android:textAllCaps="false"
+                android:background="@color/coloryellow"
+                android:textColor="@android:color/white"
+                android:text="Next"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="50dp"
+
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
