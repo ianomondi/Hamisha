@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/progressBarVerification"
         android:layout_marginTop="55dp"
-        android:text="Verify Your Phone Number"
+        android:text="Verifying Your Phone Number"
         android:textStyle="bold"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
