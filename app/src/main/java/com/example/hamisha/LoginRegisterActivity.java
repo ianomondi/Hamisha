@@ -118,7 +118,7 @@ public class LoginRegisterActivity extends AppCompatActivity
                                 Toast.makeText(getApplicationContext(), "Logged in successfully", Toast.LENGTH_SHORT).show();
                                 loadingProgress.dismiss();
 
-                                Intent intent = new Intent(getApplicationContext(), DriverProfileActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), DriversMapActivity.class);
                                 startActivity(intent);
                             }
                             else

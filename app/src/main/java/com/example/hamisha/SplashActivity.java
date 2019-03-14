@@ -48,13 +48,19 @@ public class SplashActivity extends AppCompatActivity
                 }
                 finally
                 {
-                    Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegisterActivity.class);
-                    startActivity(welcomeIntent);
+                    /*Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegisterActivity.class);
+                    startActivity(welcomeIntent);*/
+
                 }
             }
         };
         thread.start();
 
+        setupsession();
+
+    }
+
+    private void setupsession() {
         String userPhoneKey = Paper.book().read(Prevelent.userPhoneKey);
         String userPasswordKey = Paper.book().read(Prevelent.userPasswordKey);
 
@@ -62,18 +68,20 @@ public class SplashActivity extends AppCompatActivity
         {
             if (!TextUtils.isEmpty(userPhoneKey) && !TextUtils.isEmpty(userPasswordKey))
             {
-                GrantAccess(userPasswordKey, userPhoneKey);
+                GrantAccess(userPhoneKey, userPasswordKey);
 
                 loadingProgress.setMessage("Please wait as we are setting you up");
                 loadingProgress.setCanceledOnTouchOutside(false);
                 loadingProgress.show();
 
             }
+        }else {
+            Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegisterActivity.class);
+            startActivity(welcomeIntent);
         }
-
     }
 
-  private void GrantAccess(final String mobile, final String password)
+    private void GrantAccess(final String mobile, final String password)
     {
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
@@ -91,7 +99,7 @@ public class SplashActivity extends AppCompatActivity
                             Toast.makeText(getApplicationContext(), "Logged in successfully", Toast.LENGTH_SHORT).show();
                             loadingProgress.dismiss();
 
-                            Intent intent = new Intent(getApplicationContext(), DriverProfileActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), DriversMapActivity.class);
                             startActivity(intent);
                         }
                         else
@@ -103,7 +111,7 @@ public class SplashActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Account with this" + password + "does not exist", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Account with this" + mobile + "does not exist", Toast.LENGTH_SHORT).show();
                     loadingProgress.dismiss();
                 }
 
