@@ -3,6 +3,7 @@ package com.example.hamisha;
 public class Config
 {
     private static final String KEYBASE = "com.example.hamisha.";
+    private static final String URLBASE = "https://hamisha.000webhostapp.com/";
 
     public static final String PREF_NAME = KEYBASE+"registrationPref";
 
@@ -16,4 +17,8 @@ public class Config
     public static final String MOBILEKEY= KEYBASE+"mobile";
     public static final String IDKEY = KEYBASE+"email";
     public static final String PASSWORDKEY = KEYBASE+"password";
+
+
+    public static final String REGISTRATIONURL = URLBASE+"registration.php";
+
 }

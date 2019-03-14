@@ -50,12 +50,12 @@ public class DisplayActivity extends AppCompatActivity
            @Override
            public void onClick(View v)
            {
-               CreateAccount();
+               GrantAccessToCreateAccount();
            }
        });
     }
 
-    private void CreateAccount()
+    private void GrantAccessToCreateAccount()
     {
         if (checkBox.isChecked())
         {
@@ -85,7 +85,7 @@ public class DisplayActivity extends AppCompatActivity
         editor = preferences.edit();
         editor.putString(Config.FNAMEKEY, firstNametv.getText().toString().trim());
         editor.putString(Config.LNAMEKEY, lastNameTv.getText().toString().trim());
-        editor.putString(Config.IDKEY, idTv.getText().toString().trim());
+        editor.putInt(Config.IDKEY, Integer.parseInt(idTv.getText().toString().trim()));
         editor.putString(Config.MOBILEKEY, mobileTv.getText().toString().trim());
         editor.putString(Config.EMAILKEY, emailTv.getText().toString().trim());
         editor.putString(Config.PASSWORDKEY, passwordTv.getText().toString().trim());

@@ -39,6 +39,8 @@ dependencies {
 
     implementation 'com.bigbangbutton:editcodeview:1.0.6'
 
+    implementation 'io.paperdb:paperdb:2.6'
+
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.github.navasmdc:MaterialDesign:1.5@aar'
 

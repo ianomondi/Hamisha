@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -23,11 +24,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.CheckBox;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-public class PhoneVerificationActivity extends AppCompatActivity {
+public class PhoneVerificationActivity extends AppCompatActivity
+{
+    private EditText lastNameTv, firstNametv, idTv, mobileTv, emailTv, passwordTv;
+
+    private DatabaseReference userRef;
+
+    SharedPreferences.Editor editor;
     SharedPreferences pref;
 
     //These are the objects needed
@@ -48,6 +62,14 @@ public class PhoneVerificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_verification);
+
+
+        firstNametv = (EditText) findViewById(R.id.label_fname);
+        lastNameTv = (EditText) findViewById(R.id.label_lname);
+        idTv = (EditText) findViewById(R.id.label_id);
+        mobileTv = (EditText) findViewById(R.id.label_phone);
+        emailTv = (EditText) findViewById(R.id.label_email);
+        passwordTv = (EditText) findViewById(R.id.label_password);
 
         pref = getApplicationContext().getSharedPreferences(Config.PREF_NAME, Config.PRIVATE_MODE);
 
@@ -147,9 +169,9 @@ public class PhoneVerificationActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //verification successful we will start the profile activity
-                            Intent intent = new Intent(PhoneVerificationActivity.this, DriverProfileActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
+
+                            FetchAccountDetails();
+
 
                         } else {
 
@@ -172,6 +194,81 @@ public class PhoneVerificationActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void FetchAccountDetails()
+    {
+        HashMap<String, String> accountDetails = new HashMap<>();
+
+        accountDetails.put(Config.FNAMEKEY, pref.getString(Config.FNAMEKEY, null));
+        accountDetails.put(Config.LNAMEKEY, pref.getString(Config.LNAMEKEY, null));
+        accountDetails.put(Config.IDKEY, pref.getString(Config.IDKEY, null));
+        accountDetails.put(Config.PASSWORDKEY, pref.getString(Config.PASSWORDKEY, null));
+        accountDetails.put(Config.EMAILKEY, pref.getString(Config.EMAILKEY, null));
+        accountDetails.put(Config.MOBILEKEY, pref.getString(Config.MOBILEKEY, null));
+
+        getRegDetails(accountDetails);
+
+    }
+
+    private void getRegDetails(HashMap<String, String> accountDetails)
+    {
+        String firstname, lastname, nationalid, mobilenumber, password, emailaddress;
+
+        firstname = accountDetails.get(Config.FNAMEKEY);
+        lastname = accountDetails.get(Config.LNAMEKEY);
+        password = accountDetails.get(Config.PASSWORDKEY);
+        emailaddress = accountDetails.get(Config.EMAILKEY);
+        mobilenumber = accountDetails.get(Config.MOBILEKEY);
+        nationalid = accountDetails.get(Config.IDKEY);
+
+        CreateAccount(firstname, lastname, nationalid,password,emailaddress, mobilenumber);
+    }
+
+    private void CreateAccount(final String firstname, final String lastname, final String id, final String password, final String email, final String mobile)
+    {
+        final DatabaseReference userRef;
+        userRef = FirebaseDatabase.getInstance().getReference();
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!(dataSnapshot.child("Users").child(mobile).exists()))
+                {
+                    HashMap<String, Object> UserDataMap = new HashMap<>();
+                    UserDataMap.put("firstname", firstname);
+                    UserDataMap.put("lastname", lastname);
+                    UserDataMap.put("id", id);
+                    UserDataMap.put("password", password);
+                    UserDataMap.put("email", email);
+                    UserDataMap.put("mobile", mobile);
+
+                    userRef.child("Users").child(mobile).updateChildren(UserDataMap)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful())
+                                    {
+                                        Toast.makeText(getApplicationContext(), "Registered Successfully, proceed to login", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(PhoneVerificationActivity.this, LoginRegisterActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(getApplicationContext(), "This Phone number" + mobile + "has already been registered", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(PhoneVerificationActivity.this, SplashActivity.class);
+                                    }
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }
