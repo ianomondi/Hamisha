@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:scrollbars="none"
-    tools:context=".DisplayActivity">
+    tools:context=".DisplayActivity"
+    android:background="@color/white">
 
 
 
@@ -24,6 +25,7 @@
                 android:layout_marginTop="8dp"
                 android:paddingTop="8dp"
                 android:text="Confirm your details"
+                android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:padding="5dp"/>
@@ -46,7 +48,7 @@
                 android:src="@drawable/ic_person_black_24dp"
                 android:layout_below="@+id/display_reg_slogan"
                 android:layout_marginTop="8dp"
-                android:tint="@color/iconcolor"
+                android:tint="@android:color/black"
                 android:padding="8dp"/>
 
 
@@ -67,7 +69,7 @@
                 android:src="@drawable/ic_person_black_24dp"
                 android:layout_below="@+id/ivfname"
                 android:layout_marginTop="8dp"
-                android:tint="@color/iconcolor"
+                android:tint="@android:color/black"
                 android:padding="8dp"/>
 
 
@@ -90,7 +92,7 @@
                 android:src="@drawable/ic_content_copy_black_24dp"
                 android:layout_below="@+id/ivlname"
                 android:layout_marginTop="8dp"
-                android:tint="@color/iconcolor"
+                android:tint="@android:color/black"
                 android:padding="8dp"/>
 
 
@@ -105,6 +107,7 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="8dp"
                 android:padding="8dp" />
+
             <com.rey.material.widget.ImageView
                 android:id="@+id/ivphone"
                 android:layout_width="wrap_content"
@@ -112,7 +115,7 @@
                 android:src="@drawable/ic_phone_black_24dp"
                 android:layout_below="@+id/ivid"
                 android:layout_marginTop="8dp"
-                android:tint="@color/iconcolor"
+                android:tint="@android:color/black"
                 android:padding="8dp"/>
 
 
@@ -133,7 +136,7 @@
                 android:src="@drawable/ic_email_black_24dp"
                 android:layout_below="@+id/ivphone"
                 android:layout_marginTop="8dp"
-                android:tint="@color/iconcolor"
+                android:tint="@android:color/black"
                 android:padding="8dp"/>
 
 
@@ -155,7 +158,7 @@
                 android:src="@drawable/ic_lock_black_24dp"
                 android:layout_below="@+id/label_email"
                 android:layout_marginTop="8dp"
-                android:tint="@color/iconcolor"
+                android:tint="@android:color/black"
                 android:padding="8dp"/>
 
             <com.rey.material.widget.CheckBox
@@ -167,7 +170,9 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-                android:text="I agree to terms and conditions" />
+                android:text="I agree to terms and conditions"
+                android:textColor="@color/darkBlue"
+                app:cbd_strokeColor="@color/darkBlue"/>
 
             <com.rey.material.widget.Button
 
@@ -177,9 +182,9 @@
                 android:layout_below="@id/check_box"
                 android:textAllCaps="false"
                 android:layout_margin="10dp"
-                android:background="@color/coloryellow"
+                android:background="@color/darkBlue"
                 android:textColor="@android:color/white"
-                android:text="Next"
+                android:text="Continue"
 
                 />
 

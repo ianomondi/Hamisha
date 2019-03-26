@@ -18,7 +18,7 @@ public class Config
     public static final String IDKEY = KEYBASE+"email";
     public static final String PASSWORDKEY = KEYBASE+"password";
 
+    public static final String DRIVERPHONEKEY = KEYBASE+"driverphonekey";
 
-    public static final String REGISTRATIONURL = URLBASE+"registration.php";
 
 }

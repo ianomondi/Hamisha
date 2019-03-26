@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -18,6 +19,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.hamisha.Prevelent.Prevelent;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -30,6 +34,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,10 +58,16 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
 
     private double longitude;
     private double latitude;
+
+    private SharedPreferences preferences;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        preferences = getApplication().getSharedPreferences(Config.PREF_NAME, Config.PRIVATE_MODE);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -118,11 +131,15 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
         if (mCurrLocationMarker != null)
         {
             mCurrLocationMarker.remove();
+
+
         }
 //Showing Current Location Marker on Map
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
+
+
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
         String provider = locationManager.getBestProvider(new Criteria(), true);
@@ -163,6 +180,16 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
                     this);
         }
+        FirebaseAuth auth;
+        // String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userID = preferences.getString(Config.DRIVERPHONEKEY, null);
+        Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_LONG).show();
+
+
+        DatabaseReference driverAvailabilityRef = FirebaseDatabase.getInstance().getReference().child("Drivers Available");
+
+        GeoFire geoFire = new GeoFire(driverAvailabilityRef);
+        geoFire.setLocation(userID, new GeoLocation(location.getLatitude(), location.getLongitude()));
     }
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -268,5 +295,17 @@ public class DriversMapActivity extends FragmentActivity implements OnMapReadyCa
 
         //Displaying current coordinates in toast
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        //String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userID = Prevelent.userPhoneKey;
+        DatabaseReference driverAvailabilityRed = FirebaseDatabase.getInstance().getReference().child("Drivers Available");
+
+        GeoFire geoFire = new GeoFire(driverAvailabilityRed);
+        geoFire.removeLocation(userID);
     }
 }

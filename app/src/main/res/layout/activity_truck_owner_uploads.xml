@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TruckOwnerUploadsActivity"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/t_owner_slogan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please Enter Your Vehicle Details"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        android:textStyle="italic"
+        android:textAlignment="center"
+        />
+    <TextView
+        android:id="@+id/truck_make"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vehicle Make"
+        android:textSize="22sp"
+        android:layout_below="@id/t_owner_slogan"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        />
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:id="@+id/make_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/truck_make"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+
+        />
+    <TextView
+        android:id="@+id/truck_model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vehicle Model"
+        android:textSize="22sp"
+        android:layout_below="@id/make_spinner"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        />
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:id="@+id/model_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/truck_model"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <LinearLayout
+        android:layout_below="@+id/model_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select file to upload"
+            android:textAllCaps="false"
+            android:textSize="22sp"
+            android:layout_below="@id/make_spinner"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/upload_btn"
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>

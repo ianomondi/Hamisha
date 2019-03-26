@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginRegisterActivity"
-    android:fitsSystemWindows="true">
+    tools:context=".LoginActivity"
+    android:fitsSystemWindows="true"
+    android:background="@color/white">
 
     <LinearLayout
         android:orientation="vertical"
@@ -17,24 +18,35 @@
 
         <!-- Logo -->
 
-        <ImageView
-            android:src="@drawable/hamisha_logo"
+      <!--  <ImageView
+            android:src="@drawable/hamishaF"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
-
+            android:layout_gravity="center_horizontal" />-->
+        <TextView
+            android:id="@+id/login_slogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please login here"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            />
         <!-- Email Label -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="15dp">
             <EditText android:id="@+id/login_input_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="mobile number" />
+                android:hint="+254 7XX XXX XXX "
+                android:textColorHighlight="@android:color/black"
+                android:textColorHint="@android:color/black"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password Label -->
@@ -47,7 +59,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="Password"
+                android:textColorHighlight="@android:color/black"
+                android:textColorHint="@android:color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.rey.material.widget.CheckBox
@@ -56,12 +70,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="17dp"
             android:text="Remember Me"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/darkBlue"
             android:gravity="center_vertical"
             android:textSize="16sp"
             android:textStyle="bold"
             style="@style/Material.Drawable.CheckBox"
-            app:cbd_strokeColor="@color/colorPrimaryDark"
+            app:cbd_strokeColor="@color/darkBlue"
             />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -71,7 +85,16 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Login"/>
+            android:text="Login"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:background="@drawable/custom_login_btn"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            />
 
         <TextView
             android:id="@+id/link_signup"
@@ -80,7 +103,9 @@
             android:layout_marginBottom="24dp"
             android:text="No account yet? Create one"
             android:gravity="center"
-            android:textSize="16dip"/>
+            android:textSize="16dip"
+            android:textColor="@color/darkBlue"
+            android:layout_marginTop="5dp"/>
 
     </LinearLayout>
 

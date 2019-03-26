@@ -5,6 +5,8 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -17,17 +19,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import androidx.appcompat.app.AppCompatActivity;
 import io.paperdb.Paper;
 
 public class SplashActivity extends AppCompatActivity
 {
     private ProgressDialog loadingProgress;
 
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        preferences = getApplication().getSharedPreferences(Config.PREF_NAME, Config.PRIVATE_MODE);
 
         Paper.init(this);
         loadingProgress = new ProgressDialog(this);
@@ -48,7 +55,7 @@ public class SplashActivity extends AppCompatActivity
                 }
                 finally
                 {
-                    /*Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegisterActivity.class);
+                   /* Intent welcomeIntent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(welcomeIntent);*/
 
                 }
@@ -76,13 +83,15 @@ public class SplashActivity extends AppCompatActivity
 
             }
         }else {
-            Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegisterActivity.class);
+            Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegActivity.class);
             startActivity(welcomeIntent);
+            finish();
         }
     }
 
     private void GrantAccess(final String mobile, final String password)
     {
+        
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -96,23 +105,35 @@ public class SplashActivity extends AppCompatActivity
                     {
                         if (userData.getPassword().equals(password))
                         {
+                            editor = preferences.edit();
+                            editor.putString(Config.DRIVERPHONEKEY,mobile);
+                            editor.commit();
+
                             Toast.makeText(getApplicationContext(), "Logged in successfully", Toast.LENGTH_SHORT).show();
                             loadingProgress.dismiss();
 
-                            Intent intent = new Intent(getApplicationContext(), DriversMapActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), DriverChoiseActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                         else
                         {
                             loadingProgress.dismiss();
                             Toast.makeText(getApplicationContext(), "Password is incorrect.", Toast.LENGTH_SHORT).show();
+                            Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegActivity.class);
+                            startActivity(welcomeIntent);
+                            finish();
                         }
                     }
+
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Account with this" + mobile + "does not exist", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getApplicationContext(), "Account with this" + mobile + "does not exist", Toast.LENGTH_SHORT).show();
                     loadingProgress.dismiss();
+                    Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegActivity.class);
+                    startActivity(welcomeIntent);
+                    finish();
                 }
 
             }
@@ -125,6 +146,9 @@ public class SplashActivity extends AppCompatActivity
         });
 
     }
+
+
+
 
     @Override
     protected void onPause() {

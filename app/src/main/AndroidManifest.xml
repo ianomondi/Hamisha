@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hamisha">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-feature android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-feature android:name="android.permission.INTERNET"/>
 
+    <uses-feature android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-feature android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".TruckOwnerUploadsActivity"></activity>
+        <activity android:name=".TruckOwnerActivity" />
+        <activity android:name=".DriverChoiseActivity" />
+        <activity android:name=".LoginRegActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -34,12 +36,12 @@
 
         <activity
             android:name=".DriversMapActivity"
-            android:label="@string/title_activity_drivers_map"></activity>
+            android:label="@string/title_activity_drivers_map" />
         <activity android:name=".DriverProfileActivity" />
         <activity android:name=".DisplayActivity" />
         <activity android:name=".SecondActivity" />
-        <activity android:name=".FirstActivity" />
-        <activity android:name=".LoginRegisterActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MapActivity" />
         <activity android:name=".PhoneActivity" />
         <activity android:name=".PhoneVerificationActivity" />

@@ -6,6 +6,7 @@ import io.paperdb.Paper;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,15 +17,15 @@ import android.widget.Toast;
 
 import com.example.hamisha.Prevelent.Prevelent;
 import com.example.hamisha.model.Users;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.rey.material.drawable.CheckBoxDrawable;
 import com.rey.material.widget.CheckBox;
 
-public class LoginRegisterActivity extends AppCompatActivity
+public class LoginActivity extends AppCompatActivity
 {
     private EditText mobileEditText, passwordEditText;
     private CheckBox checkBox;
@@ -32,17 +33,23 @@ public class LoginRegisterActivity extends AppCompatActivity
     private TextView signUpLink;
     private ProgressDialog loadingProgress;
 
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+
     private String parentDbName = "Users";
+    FirebaseAuth auth;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_register);
+        setContentView(R.layout.activity_login);
 
         mobileEditText = (EditText) findViewById(R.id.login_input_mobile);
         passwordEditText = (EditText) findViewById(R.id.login_input_password);
+
+        preferences = getApplication().getSharedPreferences(Config.PREF_NAME, Config.PRIVATE_MODE);
 
         checkBox = (CheckBox) findViewById(R.id.remember_me_chkb);
         loginBtn = (Button) findViewById(R.id.btn_login);
@@ -63,7 +70,7 @@ public class LoginRegisterActivity extends AppCompatActivity
         signUpLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FirstActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -115,11 +122,22 @@ public class LoginRegisterActivity extends AppCompatActivity
                         {
                             if (userData.getPassword().equals(password))
                             {
+                                editor = preferences.edit();
+                                editor.putString(Config.DRIVERPHONEKEY,mobile);
+                                editor.commit();
+
                                 Toast.makeText(getApplicationContext(), "Logged in successfully", Toast.LENGTH_SHORT).show();
                                 loadingProgress.dismiss();
-
-                                Intent intent = new Intent(getApplicationContext(), DriversMapActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), DriverChoiseActivity.class);
                                 startActivity(intent);
+                                finish();
+                                /*auth = FirebaseAuth.getInstance();
+                                FirebaseUser user = auth.getCurrentUser();
+
+
+                                String currentUid = user.getUid();
+                                intent.putExtra("uid", currentUid);*/
+
                             }
                             else
                             {

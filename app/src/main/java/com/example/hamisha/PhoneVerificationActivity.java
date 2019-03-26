@@ -17,11 +17,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +28,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rey.material.widget.Button;
-import com.rey.material.widget.CheckBox;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -43,6 +40,7 @@ public class PhoneVerificationActivity extends AppCompatActivity
 
     SharedPreferences.Editor editor;
     SharedPreferences pref;
+    FirebaseAuth firebaseAuth;
 
     //These are the objects needed
     //It is the verification id that will be sent to the user
@@ -169,19 +167,18 @@ public class PhoneVerificationActivity extends AppCompatActivity
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //verification successful we will start the profile activity
-
                             FetchAccountDetails();
 
-
-                        } else {
+                        }
+                        else {
 
                             //verification unsuccessful.. display an error message
 
-                            String message = "Something is wrong, we will fix it soon...";
+                            String message = "Invalid code entered...";
 
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                            /*if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 message = "Invalid code entered...";
-                            }
+                            }*/
 
                             Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), message, Snackbar.LENGTH_LONG);
                             snackbar.setAction("Dismiss", new View.OnClickListener() {
@@ -250,7 +247,7 @@ public class PhoneVerificationActivity extends AppCompatActivity
                                     if (task.isSuccessful())
                                     {
                                         Toast.makeText(getApplicationContext(), "Registered Successfully, proceed to login", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(PhoneVerificationActivity.this, LoginRegisterActivity.class);
+                                        Intent intent = new Intent(PhoneVerificationActivity.this, LoginActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
                                     }
