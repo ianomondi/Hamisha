@@ -68,8 +68,10 @@ public class SplashActivity extends AppCompatActivity
     }
 
     private void setupsession() {
+
         String userPhoneKey = Paper.book().read(Prevelent.userPhoneKey);
         String userPasswordKey = Paper.book().read(Prevelent.userPasswordKey);
+
 
         if (userPhoneKey != "" && userPasswordKey != "")
         {
@@ -81,11 +83,14 @@ public class SplashActivity extends AppCompatActivity
                 loadingProgress.setCanceledOnTouchOutside(false);
                 loadingProgress.show();
 
-            }
+            }else {
+                Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegActivity.class);
+                startActivity(welcomeIntent);
+                }
         }else {
             Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegActivity.class);
             startActivity(welcomeIntent);
-            finish();
+            //finish();
         }
     }
 
@@ -114,7 +119,7 @@ public class SplashActivity extends AppCompatActivity
 
                             Intent intent = new Intent(getApplicationContext(), DriverChoiseActivity.class);
                             startActivity(intent);
-                            finish();
+                            //finish();
                         }
                         else
                         {
@@ -122,7 +127,7 @@ public class SplashActivity extends AppCompatActivity
                             Toast.makeText(getApplicationContext(), "Password is incorrect.", Toast.LENGTH_SHORT).show();
                             Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegActivity.class);
                             startActivity(welcomeIntent);
-                            finish();
+                            //finish();
                         }
                     }
 
@@ -133,7 +138,7 @@ public class SplashActivity extends AppCompatActivity
                     loadingProgress.dismiss();
                     Intent welcomeIntent = new Intent(getApplicationContext(), LoginRegActivity.class);
                     startActivity(welcomeIntent);
-                    finish();
+                    //finish();
                 }
 
             }

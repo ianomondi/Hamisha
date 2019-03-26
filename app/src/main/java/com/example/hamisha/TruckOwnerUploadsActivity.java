@@ -2,20 +2,29 @@ package com.example.hamisha;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.rey.material.widget.Button;
 import com.rey.material.widget.Spinner;
 
 public class TruckOwnerUploadsActivity extends AppCompatActivity
 {
     private Spinner makeSpinner, modelSpinner;
+    private Button buttonToUploads ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_truck_owner_uploads);
+
+        buttonToUploads = findViewById(R.id.toUploadsBtn);
+
+        buttonToUploads.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), DocumentsUpload.class));
+        });
 
 
         MaterialSpinner makeSpinner = (MaterialSpinner) findViewById(R.id.make_spinner);
