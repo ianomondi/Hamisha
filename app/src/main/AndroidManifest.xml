@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TruckOwnerUploadsActivity"></activity>
+        <activity android:name=".DocumentsUpload"></activity>
+        <activity android:name=".TruckOwnerUploadsActivity" />
         <activity android:name=".TruckOwnerActivity" />
         <activity android:name=".DriverChoiseActivity" />
         <activity android:name=".LoginRegActivity" />
