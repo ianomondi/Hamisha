@@ -3,7 +3,8 @@ package com.example.hamisha;
 public class Config
 {
     private static final String KEYBASE = "com.example.hamisha.";
-    private static final String URLBASE = "https://hamisha.000webhostapp.com/";
+    private static final String URLBASE = "https://hamisha-app.000webhostapp.com";
+    public static final String DRIVER_REGISTRATION_URL = URLBASE+"/v1/registerDriver.php";
 
     public static final String PREF_NAME = KEYBASE+"registrationPref";
 

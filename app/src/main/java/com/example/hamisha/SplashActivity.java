@@ -117,7 +117,7 @@ public class SplashActivity extends AppCompatActivity
                             Toast.makeText(getApplicationContext(), "Logged in successfully", Toast.LENGTH_SHORT).show();
                             loadingProgress.dismiss();
 
-                            Intent intent = new Intent(getApplicationContext(), DriverChoiseActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                             startActivity(intent);
                             //finish();
                         }

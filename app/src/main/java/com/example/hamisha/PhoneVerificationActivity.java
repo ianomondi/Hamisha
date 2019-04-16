@@ -11,6 +11,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.bigbangbutton.editcodeview.EditCodeListener;
 import com.bigbangbutton.editcodeview.EditCodeView;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +34,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rey.material.widget.Button;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class PhoneVerificationActivity extends AppCompatActivity
@@ -224,7 +233,63 @@ public class PhoneVerificationActivity extends AppCompatActivity
 
     private void CreateAccount(final String firstname, final String lastname, final String id, final String password, final String email, final String mobile)
     {
-        final DatabaseReference userRef;
+        //create driver
+        StringRequest request = new StringRequest(Request.Method.POST, Config.DRIVER_REGISTRATION_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject responseObject;
+
+                        try {
+                            responseObject = new JSONObject(response);
+
+                            boolean error = responseObject.getBoolean("error");
+                            String message = responseObject.getString("message");
+
+                            if (!error){
+                                Toast.makeText(getApplicationContext(), "Registered Successfully, proceed to login", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(PhoneVerificationActivity.this, LoginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }else {
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(PhoneVerificationActivity.this, SplashActivity.class);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PhoneVerificationActivity.this, SplashActivity.class);
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> userDataMap = new HashMap<>();
+                userDataMap.put("firstname", firstname);
+                userDataMap.put("lastname", lastname);
+                userDataMap.put("id", id);
+                userDataMap.put("password", password);
+                userDataMap.put("email", email);
+                userDataMap.put("phone", mobile);
+
+                return userDataMap;
+            }
+        };
+
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+    }
+
+}
+
+/*
+* final DatabaseReference userRef;
         userRef = FirebaseDatabase.getInstance().getReference();
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -265,7 +330,4 @@ public class PhoneVerificationActivity extends AppCompatActivity
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
-    }
-
-}
+        });*/
